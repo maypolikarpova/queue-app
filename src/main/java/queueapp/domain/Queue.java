@@ -4,7 +4,7 @@ import lombok.Data;
 
 @Data
 public class Queue {
-    private String id;
+    private String queueId;
     private String name;
 
 

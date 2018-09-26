@@ -24,7 +24,8 @@
 		<java.version>1.8</java.version>
 		<lombok.version>1.16.20</lombok.version>
 		<springfox.version>2.9.2</springfox.version>
-	</properties>
+        <fongo.version>2.0.5</fongo.version>
+    </properties>
 
 	<dependencies>
 		<dependency>
@@ -55,6 +56,17 @@
 			<artifactId>springfox-swagger-ui</artifactId>
 			<version>${springfox.version}</version>
 		</dependency>
+
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-data-mongodb</artifactId>
+		</dependency>
+
+        <dependency>
+            <groupId>com.github.fakemongo</groupId>
+            <artifactId>fongo</artifactId>
+            <version>${fongo.version}</version>
+        </dependency>
 	</dependencies>
 
 	<build>

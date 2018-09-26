@@ -1,6 +1,10 @@
 package queueapp.domain;
 
-public class Registry {
+import lombok.Data;
+import org.springframework.data.annotation.Id;
 
-    private String id;
+@Data
+public class Registry {
+    @Id
+    private String registryId;
 }
