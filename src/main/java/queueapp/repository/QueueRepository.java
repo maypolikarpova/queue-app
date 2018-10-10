@@ -21,7 +21,12 @@ import org.springframework.data.mongodb.repository.MongoRepository;
 import org.springframework.stereotype.Repository;
 import queueapp.domain.Queue;
 
+import java.util.List;
+import java.util.Optional;
+
 @Repository
 @Profile({"mongo", "fongo"})
 public interface QueueRepository extends MongoRepository<Queue, String> {
+    List<Queue> findQueueByClientIdsContaining(String clientId);
+    Optional<Queue> findByProviderId(String providerId);
 }

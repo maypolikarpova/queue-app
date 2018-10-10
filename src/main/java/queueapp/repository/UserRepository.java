@@ -19,9 +19,12 @@ package queueapp.repository;
 import org.springframework.context.annotation.Profile;
 import org.springframework.data.mongodb.repository.MongoRepository;
 import org.springframework.stereotype.Repository;
-import queueapp.domain.Client;
+import queueapp.domain.user.User;
+
+import java.util.Optional;
 
 @Repository
 @Profile({"mongo", "fongo"})
-public interface ClientRepository extends MongoRepository<Client, String> {
+public interface UserRepository extends MongoRepository<User, String> {
+    Optional<User> findByEmail(String email);
 }

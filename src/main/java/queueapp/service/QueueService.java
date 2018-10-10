@@ -5,6 +5,7 @@ import org.springframework.stereotype.Service;
 import queueapp.domain.Queue;
 import queueapp.repository.QueueRepository;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -17,8 +18,16 @@ public class QueueService {
         return queueRepository.save(queue).getQueueId();
     }
 
-    public Optional<Queue> readQueue(String queueId) {
+    public Optional<Queue> readQueueByQueueId(String queueId) {
         return queueRepository.findById(queueId);
+    }
+
+    public Optional<Queue> readQueueByProviderId(String providerId) {
+        return queueRepository.findByProviderId(providerId);
+    }
+
+    public List<Queue> readQueuesByClientId(String clientId) {
+        return queueRepository.findQueueByClientIdsContaining(clientId);
     }
 
     public boolean updateQueue(String queueId, Queue queue) {
