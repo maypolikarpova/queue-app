@@ -5,8 +5,6 @@ import lombok.NoArgsConstructor;
 import lombok.NonNull;
 import org.springframework.data.annotation.Id;
 
-import java.util.List;
-
 @Data
 @NoArgsConstructor
 public class User {
@@ -18,7 +16,6 @@ public class User {
     @NonNull
     private String email;
     private String password;
-    private List<String> occupation;
-    private byte[] photo; //TODO save pics in mongo repo in a proper format
+    private String photo; //TODO what the hell with pics
     private String address;
 }

@@ -19,9 +19,9 @@ package queueapp.repository;
 import org.springframework.context.annotation.Profile;
 import org.springframework.data.mongodb.repository.MongoRepository;
 import org.springframework.stereotype.Repository;
-import queueapp.domain.Registry;
+import queueapp.domain.queue.appointment.Appointment;
 
 @Repository
 @Profile({"mongo", "fongo"})
-public interface RegistryRepository extends MongoRepository<Registry, String> {
+public interface AppointmentRepository extends MongoRepository<Appointment, String> {
 }

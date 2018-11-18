@@ -2,7 +2,8 @@ package queueapp.service;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-import queueapp.domain.Queue;
+import queueapp.domain.queue.Queue;
+import queueapp.domain.queue.QueueResponse;
 import queueapp.repository.QueueRepository;
 
 import java.util.List;
@@ -18,7 +19,7 @@ public class QueueService {
         return queueRepository.save(queue).getQueueId();
     }
 
-    public Optional<Queue> readQueueByQueueId(String queueId) {
+    public Optional<QueueResponse> readQueueByQueueId(String queueId) {
         return queueRepository.findById(queueId);
     }
 

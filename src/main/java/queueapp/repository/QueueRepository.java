@@ -19,7 +19,7 @@ package queueapp.repository;
 import org.springframework.context.annotation.Profile;
 import org.springframework.data.mongodb.repository.MongoRepository;
 import org.springframework.stereotype.Repository;
-import queueapp.domain.Queue;
+import queueapp.domain.queue.Queue;
 
 import java.util.List;
 import java.util.Optional;
