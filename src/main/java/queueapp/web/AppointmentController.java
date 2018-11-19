@@ -69,7 +69,7 @@ public class AppointmentController {
     @RequestMapping(value = "/{appointment-id}",
             produces = {"application/json"},
             method = RequestMethod.DELETE)
-    public ResponseEntity<String> deleteAppointment(@PathVariable("appointment-id") String registryId) {
+    public ResponseEntity<Void> deleteAppointment(@PathVariable("appointment-id") String registryId) {
         return appointmentService.deleteAppointment(registryId)
                        ? ResponseEntity.noContent().build()
                        : ResponseEntity.notFound().build();

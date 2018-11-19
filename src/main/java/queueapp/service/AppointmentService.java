@@ -3,7 +3,6 @@ package queueapp.service;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import queueapp.domain.queue.appointment.Appointment;
-import queueapp.repository.AppointmentRepository;
 
 import java.util.Optional;
 
