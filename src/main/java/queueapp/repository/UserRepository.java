@@ -27,4 +27,5 @@ import java.util.Optional;
 @Profile({"mongo", "fongo"})
 public interface UserRepository extends MongoRepository<User, String> {
     Optional<User> findByEmail(String email);
+    Optional<User> findByName(String name);
 }

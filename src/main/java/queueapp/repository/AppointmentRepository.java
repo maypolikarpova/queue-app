@@ -20,6 +20,7 @@ import org.springframework.context.annotation.Profile;
 import org.springframework.data.mongodb.repository.MongoRepository;
 import org.springframework.stereotype.Repository;
 import queueapp.domain.appointment.Appointment;
+import queueapp.domain.appointment.AppointmentStatus;
 
 import java.util.List;
 
@@ -27,5 +28,5 @@ import java.util.List;
 @Profile({"mongo", "fongo"})
 public interface AppointmentRepository extends MongoRepository<Appointment, String> {
     List<Appointment> findByClientId(String clientId);
-    List<Appointment> findByQueueId(String queueId);
+    List<Appointment> findByQueueIdAndStatus(String queueId, AppointmentStatus status);
 }
