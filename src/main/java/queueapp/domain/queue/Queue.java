@@ -4,14 +4,8 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.NonNull;
 import org.springframework.data.annotation.Id;
-import org.springframework.util.CollectionUtils;
-import queueapp.domain.queue.appointment.Appointment;
-import queueapp.domain.queue.appointment.AppointmentStatus;
 
-import java.time.LocalDateTime;
-import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Data
 @NoArgsConstructor
@@ -23,13 +17,13 @@ public class Queue {
     private String name;
     private boolean closed;
     private String description;
-    private List<Appointment> appointments = new ArrayList<>();
+   // private List<Appointment> appointments = new ArrayList<>();
     private List<String> tags;
     private String address;
     private List<Range> ranges;
     private String phoneNumber;
 
-    public int getFutureAppointmentsAmount() {
+   /* public int getFutureAppointmentsAmount() {
         if (!CollectionUtils.isEmpty(appointments)) {
             return appointments.stream()
                            .filter(Appointment::isFutureAppointment)
@@ -53,6 +47,6 @@ public class Queue {
                        .findFirst()
                        .map(Appointment::getDateTimeFrom)
                        .orElseGet(() -> null);
-    }
+    }*/
 
 }

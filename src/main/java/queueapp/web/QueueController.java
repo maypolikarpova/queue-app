@@ -12,8 +12,8 @@ import queueapp.domain.queue.CreateQueueRequest;
 import queueapp.domain.queue.QueueResponse;
 import queueapp.domain.queue.Range;
 import queueapp.domain.queue.UpdateQueueRequest;
-import queueapp.domain.queue.appointment.AppointmentStatus;
-import queueapp.domain.queue.appointment.ReadAppointmentResponse;
+import queueapp.domain.appointment.AppointmentStatus;
+import queueapp.domain.appointment.ReadAppointmentResponse;
 import queueapp.service.QueueService;
 
 import java.util.List;
@@ -104,7 +104,6 @@ public class QueueController {
         return CollectionUtils.isEmpty(appointmentsIds)
                        ? ResponseEntity.notFound().build()
                        : ResponseEntity.ok(appointmentsIds);
-
     }
 
     @ApiOperation(value = "Get appointment by queue id", nickname = "getAppoinmentsByQueueIdAndStatus", response = String.class)
@@ -117,7 +116,7 @@ public class QueueController {
     public ResponseEntity<List<ReadAppointmentResponse>> getAppoinmentsByQueueIdAndStatus(@PathVariable("queue-id") String queueId,
                                                                                           @PathVariable("status") String status) {
 
-        List<ReadAppointmentResponse> responses = queueService.getAppoinmentsByQueueIdAndStatus(queueId, AppointmentStatus.valueOf(status));
+        List<ReadAppointmentResponse> responses = queueService.getAppointmentsByQueueIdAndStatus(queueId, AppointmentStatus.valueOf(status));
 
         return CollectionUtils.isEmpty(responses)
                        ? ResponseEntity.notFound().build()

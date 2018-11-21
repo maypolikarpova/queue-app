@@ -5,7 +5,11 @@ import queueapp.domain.queue.CreateQueueRequest;
 import queueapp.domain.queue.Queue;
 import queueapp.domain.queue.QueueResponse;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 @Component
 public class QueueMapper {
@@ -44,5 +48,15 @@ public class QueueMapper {
                            );
 
                        });
+    }
+
+    public List<QueueResponse> mapToQueueResponses(List<Queue> queues) {
+        List<QueueResponse> responses = new ArrayList<>();
+        for(Queue queue: queues) {
+            Optional<QueueResponse> response = mapToQueueResponse(queue);
+            response.ifPresent(responses::add);
+        }
+
+        return responses;
     }
 }

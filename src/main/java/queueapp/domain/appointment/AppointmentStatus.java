@@ -1,9 +1,9 @@
-package queueapp.domain.queue.appointment;
+package queueapp.domain.appointment;
 
 public enum AppointmentStatus {
     CREATED,
     REQUESTED,
     APPROVED,
-    CANCELED,
+    CANCELLED,
     EXPIRED
 }

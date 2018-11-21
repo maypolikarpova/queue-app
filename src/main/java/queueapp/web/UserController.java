@@ -6,6 +6,7 @@ import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.util.CollectionUtils;
 import org.springframework.web.bind.annotation.*;
 import queueapp.domain.queue.Queue;
 import queueapp.domain.queue.QueueResponse;
@@ -21,10 +22,10 @@ public class UserController {
 
     private final UserService userService;
 
-    @ApiOperation(value = "Sign up new user", nickname = "signUpUser", response = String.class)
+    @ApiOperation(value = "Sign up new user", nickname = "signUpUser", response = UserResponse.class)
     @ApiResponses(value = {
-            @ApiResponse(code = 201, message = "Created", response = String.class),
-            @ApiResponse(code = 400, message = "Bad request", response = String.class)})
+            @ApiResponse(code = 201, message = "Created", response = UserResponse.class),
+            @ApiResponse(code = 400, message = "Bad request")})
     @RequestMapping(value = "/signup",
             produces = {"application/json"},
             method = RequestMethod.POST)
@@ -34,10 +35,10 @@ public class UserController {
                        .orElseGet(ResponseEntity.badRequest()::build);
     }
 
-    @ApiOperation(value = "Read user information", nickname = "readUser", response = String.class)
+    @ApiOperation(value = "Read user information", nickname = "readUser", response = UserResponse.class)
     @ApiResponses(value = {
-            @ApiResponse(code = 200, message = "OK", response = User.class),
-            @ApiResponse(code = 404, message = "Not Found", response = String.class)})
+            @ApiResponse(code = 200, message = "OK", response = UserResponse.class),
+            @ApiResponse(code = 404, message = "Not Found")})
     @RequestMapping(value = "/{user-id}",
             produces = {"application/json"},
             method = RequestMethod.GET)
@@ -47,21 +48,21 @@ public class UserController {
                        .orElseGet(ResponseEntity.notFound()::build);
     }
 
-    @ApiOperation(value = "Update user information", nickname = "updateUserInfo", response = String.class)
+    @ApiOperation(value = "Update user information", nickname = "updateUser", response = UserResponse.class)
     @ApiResponses(value = {
-            @ApiResponse(code = 200, message = "OK", response = String.class),
-            @ApiResponse(code = 400, message = "Bad Request", response = String.class)})
+            @ApiResponse(code = 200, message = "OK", response = UserResponse.class),
+            @ApiResponse(code = 400, message = "Bad Request")})
     @RequestMapping(value = "/{user-id}",
             produces = {"application/json"},
             method = RequestMethod.PATCH)
     public ResponseEntity<UserResponse> updateUserInfo(@PathVariable("user-id") String userId,
-                                             @RequestBody UpdateUserRequest user) {
-        return userService.updateUserInfo(userId, user)
-                       ? ResponseEntity.ok().build()
-                       : ResponseEntity.notFound().build();
+                                                       @RequestBody UpdateUserRequest request) {
+        return userService.updateUser(userId, request)
+                       .map(ResponseEntity::ok)
+                       .orElseGet(ResponseEntity.notFound()::build);
     }
 
-    @ApiOperation(value = "Update user password", nickname = "updateUser", response = String.class)
+    @ApiOperation(value = "Update user password", nickname = "updateUserPassword", response = String.class)
     @ApiResponses(value = {
             @ApiResponse(code = 200, message = "OK", response = String.class),
             @ApiResponse(code = 404, message = "Not Found", response = String.class)})
@@ -69,20 +70,20 @@ public class UserController {
             produces = {"application/json"},
             method = RequestMethod.PATCH)
     public ResponseEntity<Void> updateUserPassword(@PathVariable("user-id") String userId,
-                                                  @RequestBody UpdatePasswordRequest passwords) {
+                                                   @RequestBody UpdatePasswordRequest passwords) {
         return userService.updateUserPassword(userId, passwords.getOldPassword(), passwords.getNewPassword())
                        ? ResponseEntity.ok().build()
                        : ResponseEntity.notFound().build();
     }
 
-    @ApiOperation(value = "Delete user", nickname = "deleteUser", response = String.class)
+    @ApiOperation(value = "Delete user", nickname = "deleteUser")
     @ApiResponses(value = {
-            @ApiResponse(code = 204, message = "No content", response = String.class),
-            @ApiResponse(code = 404, message = "Not Found", response = String.class)})
+            @ApiResponse(code = 204, message = "No content"),
+            @ApiResponse(code = 404, message = "Not Found")})
     @RequestMapping(value = "/{user-id}",
             produces = {"application/json"},
             method = RequestMethod.DELETE)
-    public ResponseEntity<String> deleteUser(@PathVariable("user-id") String userId) {
+    public ResponseEntity<Void> deleteUser(@PathVariable("user-id") String userId) {
         return userService.deleteUser(userId)
                        ? ResponseEntity.noContent().build()
                        : ResponseEntity.notFound().build();
@@ -121,9 +122,10 @@ public class UserController {
             produces = {"application/json"},
             method = RequestMethod.GET)
     public ResponseEntity<List<QueueResponse>> readQueuesByProviderId(@PathVariable("provider-id") String queueId) {
-        return queueService.readQueueByProviderId(queueId)
-                       .map(ResponseEntity::ok)
-                       .orElse(ResponseEntity.notFound().build());
+        List<QueueResponse> responses = userService.readQueueByProviderId(queueId);
+        return CollectionUtils.isEmpty(responses)
+                       ? ResponseEntity.notFound().build()
+                       : ResponseEntity.ok(responses);
     }
 
     @ApiOperation(value = "Read Queue information by provider id", nickname = "readQueueByProviderId", response = String.class)
@@ -133,9 +135,10 @@ public class UserController {
     @RequestMapping(value = "/{client-id}/appointments/{status}",
             produces = {"application/json"},
             method = RequestMethod.GET)
-    public ResponseEntity<List<QueueResponse>> readQueuesByProviderId(@PathVariable("client-id") String queueId) {
-        return queueService.readQueueByProviderId(queueId)
-                       .map(ResponseEntity::ok)
-                       .orElse(ResponseEntity.notFound().build());
+    public ResponseEntity<List<QueueResponse>> readQueuesByClientId(@PathVariable("client-id") String clientId) {
+        List<QueueResponse> responses = userService.readQueuesByClientId(clientId);
+        return CollectionUtils.isEmpty(responses)
+                       ? ResponseEntity.notFound().build()
+                       : ResponseEntity.ok(responses);
     }
 }

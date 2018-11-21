@@ -2,7 +2,9 @@ package queueapp.service;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-import queueapp.domain.queue.appointment.Appointment;
+import queueapp.domain.appointment.Appointment;
+import queueapp.domain.appointment.AppointmentStatus;
+import queueapp.repository.AppointmentRepository;
 
 import java.util.Optional;
 
@@ -12,27 +14,31 @@ public class AppointmentService {
 
     private final AppointmentRepository appointmentRepository;
 
-    public String createRegistry(Appointment appointment) {
-        return appointmentRepository.save(appointment).getAppointmentId();
+    public boolean requestAppointmentFromClient(String appointmentId, String clientId) {
+        return appointmentRepository.findById(appointmentId)
+                       .filter(a -> a.getClientId().equals(clientId))
+                       .map(a -> updateAppointmentStatusAndSave(a, AppointmentStatus.REQUESTED))
+                       .orElse(false);
     }
 
-    public Optional<Appointment> readRegistry(String registryId) {
-        return appointmentRepository.findById(registryId);
+    public boolean updateAppointmentStatus(String appointmentId, AppointmentStatus status) {
+        return appointmentRepository.findById(appointmentId)
+                       .map(a -> updateAppointmentStatusAndSave(a, status))
+                       .orElse(false);
     }
 
-    public boolean updateRegistry(String registryId, Appointment appointment) {
-        if (appointmentRepository.existsById(registryId)) {
-            appointmentRepository.save(appointment);
-            return true;
-        }
-        return false;
-    }
-
-    public boolean deleteRegistry(String registryId) {
+    public boolean deleteAppointment(String registryId) {
         if (appointmentRepository.existsById(registryId)) {
             appointmentRepository.deleteById(registryId);
             return true;
         }
         return false;
     }
+
+    private boolean updateAppointmentStatusAndSave(Appointment appointment, AppointmentStatus status) {
+        appointment.setStatus(status);
+        return Optional.ofNullable(appointmentRepository.save(appointment))
+                       .isPresent();
+    }
+
 }

@@ -1,4 +1,4 @@
-package queueapp.domain.queue.appointment;
+package queueapp.domain.appointment;
 
 import lombok.Value;
 import queueapp.domain.queue.QueueResponse;

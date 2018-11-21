@@ -2,38 +2,55 @@ package queueapp.service;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-import queueapp.domain.user.LogInUserRequest;
-import queueapp.domain.user.User;
+import queueapp.domain.appointment.Appointment;
+import queueapp.domain.queue.Queue;
+import queueapp.domain.queue.QueueResponse;
+import queueapp.domain.user.*;
+import queueapp.repository.AppointmentRepository;
+import queueapp.repository.QueueRepository;
 import queueapp.repository.UserRepository;
+import queueapp.service.mapper.QueueMapper;
+import queueapp.service.mapper.UserMapper;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
 public class UserService {
 
     private final UserRepository userRepository;
+    private final QueueRepository queueRepository;
+    private final AppointmentRepository appointmentRepository;
+    private final UserMapper userMapper;
+    private final QueueMapper queueMapper;
 
-    public Optional<User> createUser(User user) {
-        return Optional.ofNullable(userRepository.save(user));
-    }
+    public Optional<UserResponse> createUser(CreateUserRequest request) {
+        Optional<User> savedUser = userMapper.mapToUser(request)
+                                           .map(userRepository::save);
 
-    public Optional<User> readUser(String userId) {
-        return userRepository.findById(userId);
-    }
-
-    public boolean updateUserInfo(String userId, User user) {
-        if (userRepository.existsById(userId)) {
-            user.setUserId(userId);
-            userRepository.save(user);
-            return true;
+        if (savedUser.isPresent()) {
+            return userMapper.mapToUserResponse(savedUser.get());
         }
-        return false;
+
+        return Optional.empty();
     }
 
-    public boolean updateUserPhoto(String userId, byte[] photo) {
-        //TODO implement
-        return true;
+    public Optional<UserResponse> readUser(String userId) {
+        return userRepository.findById(userId)
+                       .flatMap(userMapper::mapToUserResponse);
+    }
+
+    public Optional<UserResponse> updateUser(String userId, UpdateUserRequest request) {
+        Optional<User> optionalUser = userRepository.findById(userId);
+
+        if (optionalUser.isPresent() && Optional.ofNullable(request).isPresent()) {
+            return userMapper.mapToUserResponse(updateUserInfo(optionalUser.get(), request));
+        }
+
+        return Optional.empty();
     }
 
     public boolean updateUserPassword(String userId, String oldPassword, String newPassword) {
@@ -57,12 +74,50 @@ public class UserService {
                        .filter(user -> user.getPassword().equals(logInUserRequest.getPassword())); //TODO if logInUserRequest password in db is hashed or encrypted - decrypt!
     }
 
+    public List<QueueResponse> readQueueByProviderId(String providerId) {
+        return queueMapper.mapToQueueResponses(queueRepository.findByProviderId(providerId));
+    }
+
+    public List<QueueResponse> readQueuesByClientId(String clientId) {
+        List<String> queueIds = appointmentRepository.findByClientId(clientId)
+                                        .stream()
+                                        .map(Appointment::getQueueId)
+                                        .collect(Collectors.toList());
+        List<Queue> queues = new ArrayList<>();
+
+        for (String id : queueIds) {
+            queueRepository.findById(id)
+                    .map(queues::add);
+        }
+
+        return queueMapper.mapToQueueResponses(queues);
+    }
+
     private boolean validatePassword(String userPassword, String oldPassword) {
         return userPassword.equals(oldPassword); //TODO if user password in db is hashed or encrypted - decrypt!
     }
 
     private boolean updatePassword(User user, String newPassword) {
         user.setPassword(newPassword);
-        return createUser(user).isPresent();
+        return Optional.ofNullable(userRepository.save(user))
+                       .isPresent();
     }
+
+    private User updateUserInfo(User user, UpdateUserRequest request) {
+        if (request.getPhoneNumber() != null) {
+            user.setPhoneNumber(request.getPhoneNumber());
+        }
+        if (request.getName() != null) {
+            user.setName(request.getName());
+        }
+        if (request.getEmail() != null) {
+            user.setEmail(request.getEmail());
+        }
+        if (request.getPhoto() != null) {
+            user.setPhoto(request.getPhoto());
+        }
+
+        return userRepository.save(user);
+    }
+
 }

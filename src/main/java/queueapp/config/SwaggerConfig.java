@@ -31,7 +31,7 @@ public class SwaggerConfig {
     private ApiInfo getApiInfo() {
         return new ApiInfoBuilder()
                    .title("Queue App REST API")
-                   .contact(new Contact("Mariia Polikarpova", "https://github.com/maypolikarpova", "mary.polikarpova@gmail.com"))
+                   .contact(new Contact("Mariia Polikarpova", "https://github.com/maypolikarpova", "may.polikarpova@gmail.com"))
                    .version("1.0")
                    .build();
     }

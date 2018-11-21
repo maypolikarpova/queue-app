@@ -8,7 +8,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import queueapp.domain.queue.QueueResponse;
-import queueapp.domain.queue.appointment.Appointment;
+import queueapp.domain.appointment.Appointment;
 import queueapp.domain.user.UserResponse;
 import queueapp.service.AppointmentService;
 

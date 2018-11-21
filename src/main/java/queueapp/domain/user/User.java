@@ -16,6 +16,6 @@ public class User {
     @NonNull
     private String email;
     private String password;
-    private String photo; //TODO what the hell with pics
+    private byte[] photo; //TODO what the hell with pics
     private String address;
 }
