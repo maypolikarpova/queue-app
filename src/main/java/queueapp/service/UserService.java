@@ -71,7 +71,7 @@ public class UserService {
 
     public Optional<User> identifyUser(LogInUserRequest logInUserRequest) {
         return userRepository.findByEmail(logInUserRequest.getEmail())
-                       .filter(user -> user.getPassword().equals(logInUserRequest.getPassword())); //TODO if logInUserRequest password in db is hashed or encrypted - decrypt!
+                       .filter(user -> user.getPassword().equals(logInUserRequest.getPassword()));
     }
 
     public List<QueueResponse> readQueueByProviderId(String providerId) {
@@ -115,6 +115,9 @@ public class UserService {
         }
         if (request.getPhoto() != null) {
             user.setPhoto(request.getPhoto());
+        }
+        if (request.getAddress() != null) {
+            user.setAddress(request.getAddress());
         }
 
         return userRepository.save(user);

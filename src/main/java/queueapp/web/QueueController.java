@@ -6,11 +6,15 @@ import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.util.CollectionUtils;
 import org.springframework.web.bind.annotation.*;
+import queueapp.domain.appointment.ReadAppointmentResponse;
 import queueapp.domain.queue.CreateQueueRequest;
 import queueapp.domain.queue.QueueResponse;
 import queueapp.domain.queue.UpdateQueueRequest;
 import queueapp.service.QueueService;
+
+import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
@@ -84,5 +88,21 @@ public class QueueController {
         return queueService.deleteQueue(queueId)
                        ? ResponseEntity.notFound().build()
                        : ResponseEntity.noContent().build();
+    }
+
+    @ApiOperation(value = "Get appointment by queue id", nickname = "getAppoinmentsByQueueIdAndStatus", response = String.class)
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "Created"),
+            @ApiResponse(code = 404, message = "Bad Request")})
+    @RequestMapping(value = "v1/queue/{queue-id}/appointments",
+            produces = {"application/json"},
+            method = RequestMethod.GET)
+    public ResponseEntity<List<ReadAppointmentResponse>> getAppoinmentsByQueueIdAndStatus(@PathVariable("queue-id") String queueId) {
+
+        List<ReadAppointmentResponse> responses = queueService.getAppointmentsByQueueId(queueId);
+
+        return CollectionUtils.isEmpty(responses)
+                       ? ResponseEntity.notFound().build()
+                       : ResponseEntity.ok(responses);
     }
 }

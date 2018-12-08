@@ -132,7 +132,7 @@ public class UserController {
     @ApiResponses(value = {
             @ApiResponse(code = 200, message = "OK", response = Queue.class),
             @ApiResponse(code = 404, message = "Not Found", response = List.class)})
-    @RequestMapping(value = "v1/user/{client-id}/appointments/{status}",
+    @RequestMapping(value = "v1/user/{client-id}/appointments",
             produces = {"application/json"},
             method = RequestMethod.GET)
     public ResponseEntity<List<QueueResponse>> readQueuesByClientId(@PathVariable("client-id") String clientId) {

@@ -19,6 +19,7 @@ public class AppointmentMapper {
 
     private ReadAppointmentResponse mapToReadAppointmentResponse(Appointment appointment) {
         return new ReadAppointmentResponse(
+                appointment.getQueueId(),
                 appointment.getAppointmentId(),
                 mapToUserResponse(appointment.getClientId()),
                 appointment.getDateTimeFrom(),

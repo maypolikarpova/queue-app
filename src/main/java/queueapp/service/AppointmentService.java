@@ -5,10 +5,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
 import queueapp.domain.appointment.Appointment;
 import queueapp.domain.appointment.AppointmentStatus;
-import queueapp.domain.appointment.ReadAppointmentResponse;
 import queueapp.domain.queue.Range;
 import queueapp.repository.AppointmentRepository;
-import queueapp.service.mapper.AppointmentMapper;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -21,7 +19,6 @@ import java.util.stream.Collectors;
 public class AppointmentService {
 
     private final AppointmentRepository appointmentRepository;
-    private final AppointmentMapper appointmentMapper;
 
     public List<String> createAppointments(String queueId, List<Range> ranges) {
         List<String> appointmentsIds = new ArrayList<>();
@@ -38,11 +35,6 @@ public class AppointmentService {
         }
 
         return appointmentsIds;
-    }
-
-    public List<ReadAppointmentResponse> getAppointmentsByQueueIdAndStatus(String queueId, AppointmentStatus status) {
-        return appointmentMapper.mapToReadAppointmentResponseList(
-                appointmentRepository.findByQueueIdAndStatus(queueId, status));
     }
 
     public boolean requestAppointmentFromClient(String appointmentId, String clientId) {

@@ -2,13 +2,17 @@ package queueapp.service;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import queueapp.domain.appointment.ReadAppointmentResponse;
 import queueapp.domain.queue.CreateQueueRequest;
 import queueapp.domain.queue.Queue;
 import queueapp.domain.queue.QueueResponse;
 import queueapp.domain.queue.UpdateQueueRequest;
+import queueapp.repository.AppointmentRepository;
 import queueapp.repository.QueueRepository;
+import queueapp.service.mapper.AppointmentMapper;
 import queueapp.service.mapper.QueueMapper;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -17,6 +21,8 @@ public class QueueService {
 
     private final QueueRepository queueRepository;
     private final QueueMapper queueMapper;
+    private final AppointmentMapper appointmentMapper;
+    private final AppointmentRepository appointmentRepository;
 
     public Optional<String> createQueue(CreateQueueRequest request) {
         return queueMapper.mapToQueue(request)
@@ -44,6 +50,10 @@ public class QueueService {
             return true;
         }
         return false;
+    }
+
+    public List<ReadAppointmentResponse> getAppointmentsByQueueId(String queueId) {
+        return appointmentMapper.mapToReadAppointmentResponseList(appointmentRepository.findByQueueId(queueId));
     }
 
     private Optional<QueueResponse> updateQueueFieldsAndSave(Queue queue, UpdateQueueRequest request) {

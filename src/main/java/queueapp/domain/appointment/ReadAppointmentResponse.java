@@ -7,6 +7,7 @@ import java.time.LocalDateTime;
 
 @Value
 public class ReadAppointmentResponse {
+    private String queueId;
     private String appointmentId;
     private UserResponse client;
     private LocalDateTime dateTimeFrom;

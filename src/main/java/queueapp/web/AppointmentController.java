@@ -9,7 +9,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.util.CollectionUtils;
 import org.springframework.web.bind.annotation.*;
 import queueapp.domain.appointment.AppointmentStatus;
-import queueapp.domain.appointment.ReadAppointmentResponse;
 import queueapp.domain.queue.Range;
 import queueapp.service.AppointmentService;
 
@@ -92,22 +91,5 @@ public class AppointmentController {
         return CollectionUtils.isEmpty(appointmentsIds)
                        ? ResponseEntity.notFound().build()
                        : ResponseEntity.ok(appointmentsIds);
-    }
-
-    @ApiOperation(value = "Get appointment by queue id", nickname = "getAppoinmentsByQueueIdAndStatus", response = String.class)
-    @ApiResponses(value = {
-            @ApiResponse(code = 200, message = "Created"),
-            @ApiResponse(code = 404, message = "Bad Request")})
-    @RequestMapping(value = "v1/appointment/queue/{queue-id}/status/{status}",
-            produces = {"application/json"},
-            method = RequestMethod.GET)
-    public ResponseEntity<List<ReadAppointmentResponse>> getAppoinmentsByQueueIdAndStatus(@PathVariable("queue-id") String queueId,
-                                                                                          @PathVariable("status") String status) {
-
-        List<ReadAppointmentResponse> responses = appointmentService.getAppointmentsByQueueIdAndStatus(queueId, AppointmentStatus.valueOf(status));
-
-        return CollectionUtils.isEmpty(responses)
-                       ? ResponseEntity.notFound().build()
-                       : ResponseEntity.ok(responses);
     }
 }

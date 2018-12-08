@@ -28,5 +28,6 @@ import java.util.List;
 @Profile({"mongo", "fongo"})
 public interface AppointmentRepository extends MongoRepository<Appointment, String> {
     List<Appointment> findByClientId(String clientId);
+    List<Appointment> findByQueueId(String queueId);
     List<Appointment> findByQueueIdAndStatus(String queueId, AppointmentStatus status);
 }
