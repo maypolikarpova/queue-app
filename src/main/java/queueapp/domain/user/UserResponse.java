@@ -10,4 +10,5 @@ public class UserResponse {
     private String phoneNumber;
     private String name;
     private String photo;
+    private String address;
 }

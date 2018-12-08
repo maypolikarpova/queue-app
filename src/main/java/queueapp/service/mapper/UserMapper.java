@@ -16,9 +16,9 @@ public class UserMapper {
                            User user = new User();
                            user.setName(r.getName());
                            user.setEmail(r.getEmail());
-                           user.setPassword(r.getPassword()); //TODO encryption
+                           user.setPassword(r.getPassword());
                            user.setPhoneNumber(r.getPhoneNumber());
-                           user.setPhoto(r.getPhoto()); //TODO pics
+                           user.setPhoto(r.getPhoto());
 
                            return user;
                        });
@@ -32,6 +32,7 @@ public class UserMapper {
                                u.getPassword(),
                                u.getPhoneNumber(),
                                u.getName(),
+                               u.getPhoto(),
                                u.getAddress()
                        ));
     }
