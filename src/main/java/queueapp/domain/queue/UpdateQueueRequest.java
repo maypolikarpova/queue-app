@@ -12,4 +12,5 @@ public class UpdateQueueRequest {
     private String description;
     private String address;
     private String phoneNumber;
+    private boolean closed;
 }

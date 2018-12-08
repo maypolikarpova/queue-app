@@ -63,20 +63,6 @@ public class QueueController {
                        .orElseGet(() -> ResponseEntity.notFound().build());
     }
 
-    @ApiOperation(value = "Update Queue", nickname = "updateQueue", response = QueueResponse.class)
-    @ApiResponses(value = {
-            @ApiResponse(code = 200, message = "OK"),
-            @ApiResponse(code = 400, message = "Bad Request", response = QueueResponse.class),
-            @ApiResponse(code = 404, message = "Not Found")})
-    @RequestMapping(value = "v1/queue/{queue-id}/closed",
-            produces = {"application/json"},
-            method = RequestMethod.PATCH)
-    public ResponseEntity<QueueResponse> toggleQueueState(@PathVariable("queue-id") String queueId) {
-        return queueService.toggleQueueState(queueId)
-                       .map(ResponseEntity::ok)
-                       .orElseGet(() -> ResponseEntity.notFound().build());
-    }
-
     @ApiOperation(value = "Delete Queue", nickname = "deleteQueue")
     @ApiResponses(value = {
             @ApiResponse(code = 204, message = "No content"),

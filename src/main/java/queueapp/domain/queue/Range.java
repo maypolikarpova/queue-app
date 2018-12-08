@@ -12,5 +12,4 @@ import java.time.LocalDateTime;
 public class Range {
     private LocalDateTime dateTimeFrom;
     private LocalDateTime dateTimeTo;
-    private int period;
 }

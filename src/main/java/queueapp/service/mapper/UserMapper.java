@@ -5,7 +5,9 @@ import queueapp.domain.user.CreateUserRequest;
 import queueapp.domain.user.User;
 import queueapp.domain.user.UserResponse;
 
+import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Component
 public class UserMapper {
@@ -30,11 +32,18 @@ public class UserMapper {
                        .map(u -> new UserResponse(
                                u.getUserId(),
                                u.getEmail(),
-                               u.getPassword(),
                                u.getPhoneNumber(),
                                u.getName(),
                                u.getPhoto(),
                                u.getAddress()
                        ));
+    }
+
+    public List<UserResponse> mapToUserResponses(List<User> users) {
+        return users.stream()
+                       .map(this::mapToUserResponse)
+                       .filter(Optional::isPresent)
+                       .map(Optional::get)
+                       .collect(Collectors.toList());
     }
 }

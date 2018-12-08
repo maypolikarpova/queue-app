@@ -39,11 +39,6 @@ public class QueueService {
                        .flatMap(q -> updateQueueFieldsAndSave(q, request));
     }
 
-    public Optional<QueueResponse> toggleQueueState(String queueId) {
-        return Optional.ofNullable(queueRepository.findOne(queueId))
-                       .flatMap(this::toggleQueueState);
-    }
-
     public boolean deleteQueue(String queueId) {
         if (queueRepository.exists(queueId)) {
             queueRepository.delete(queueId);
@@ -61,12 +56,8 @@ public class QueueService {
         queue.setDescription(request.getDescription());
         queue.setName(request.getName());
         queue.setAddress(request.getAddress());
+        queue.setClosed(request.isClosed());
 
-        return queueMapper.mapToQueueResponse(queueRepository.save(queue));
-    }
-
-    private Optional<QueueResponse> toggleQueueState(Queue queue) {
-        queue.setClosed(!queue.isClosed());
         return queueMapper.mapToQueueResponse(queueRepository.save(queue));
     }
 }
