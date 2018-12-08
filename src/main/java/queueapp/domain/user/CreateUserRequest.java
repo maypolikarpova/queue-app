@@ -13,6 +13,7 @@ public class CreateUserRequest {
     private String password;
     private String phoneNumber;
     private String name;
+    private String address;
     private String photo;
 
 }

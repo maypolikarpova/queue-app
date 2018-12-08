@@ -19,6 +19,7 @@ public class UserMapper {
                            user.setPassword(r.getPassword());
                            user.setPhoneNumber(r.getPhoneNumber());
                            user.setPhoto(r.getPhoto());
+                           user.setAddress(r.getAddress());
 
                            return user;
                        });
