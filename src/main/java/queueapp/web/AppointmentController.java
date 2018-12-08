@@ -17,7 +17,7 @@ import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
-@Api(value = "v1/appointment", description = "Appointment Controller")
+@Api(value = "v1/", description = "Appointment Controller")
 public class AppointmentController {
 
     private final AppointmentService appointmentService;
@@ -27,7 +27,7 @@ public class AppointmentController {
             @ApiResponse(code = 200, message = "OK"),
             @ApiResponse(code = 400, message = "Bad Request"),
             @ApiResponse(code = 404, message = "Not Found")})
-    @RequestMapping(value = "/{appointment-id}/client/{client-id}/status/requested",
+    @RequestMapping(value = "v1/appointment/{appointment-id}/client/{client-id}/status/requested",
             produces = {"application/json"},
             method = RequestMethod.PATCH)
     public ResponseEntity<Void> requestAppointment(@PathVariable("appointment-id") String appointmentId,
@@ -42,7 +42,7 @@ public class AppointmentController {
             @ApiResponse(code = 200, message = "OK"),
             @ApiResponse(code = 400, message = "Bad Request"),
             @ApiResponse(code = 404, message = "Not Found")})
-    @RequestMapping(value = "/{appointment-id}/status/cancelled",
+    @RequestMapping(value = "v1/appointment/{appointment-id}/status/cancelled",
             produces = {"application/json"},
             method = RequestMethod.PATCH)
     public ResponseEntity<String> cancelAppointment(@PathVariable("appointment-id") String appointmentId) {
@@ -56,7 +56,7 @@ public class AppointmentController {
             @ApiResponse(code = 200, message = "OK"),
             @ApiResponse(code = 400, message = "Bad Request"),
             @ApiResponse(code = 404, message = "Not Found")})
-    @RequestMapping(value = "/{appointment-id}/provider/{provider-id}/status/approved",
+    @RequestMapping(value = "v1/appointment/{appointment-id}/provider/{provider-id}/status/approved",
             produces = {"application/json"},
             method = RequestMethod.PATCH)
     public ResponseEntity<String> approveAppointment(@PathVariable("appointment-id") String appointmentId) {
@@ -69,7 +69,7 @@ public class AppointmentController {
     @ApiResponses(value = {
             @ApiResponse(code = 204, message = "No content"),
             @ApiResponse(code = 404, message = "Not Found")})
-    @RequestMapping(value = "/{appointment-id}",
+    @RequestMapping(value = "v1/appointment/{appointment-id}",
             produces = {"application/json"},
             method = RequestMethod.DELETE)
     public ResponseEntity<Void> deleteAppointment(@PathVariable("appointment-id") String appointmentId) {
@@ -82,7 +82,7 @@ public class AppointmentController {
     @ApiResponses(value = {
             @ApiResponse(code = 201, message = "Created"),
             @ApiResponse(code = 400, message = "Bad Request")})
-    @RequestMapping(value = "queue/{queue-id}",
+    @RequestMapping(value = "v1/appointment/queue/{queue-id}",
             produces = {"application/json"},
             method = RequestMethod.POST)
     public ResponseEntity<List<String>> createAppointments(@PathVariable("queue-id") String queueId,
@@ -98,7 +98,7 @@ public class AppointmentController {
     @ApiResponses(value = {
             @ApiResponse(code = 200, message = "Created"),
             @ApiResponse(code = 404, message = "Bad Request")})
-    @RequestMapping(value = "queue/{queue-id}/status/{status}",
+    @RequestMapping(value = "v1/appointment/queue/{queue-id}/status/{status}",
             produces = {"application/json"},
             method = RequestMethod.GET)
     public ResponseEntity<List<ReadAppointmentResponse>> getAppoinmentsByQueueIdAndStatus(@PathVariable("queue-id") String queueId,

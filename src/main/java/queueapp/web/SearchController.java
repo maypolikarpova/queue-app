@@ -19,7 +19,7 @@ import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
-@Api(value = "v1/search", description = "Search Controller")
+@Api(value = "v1/", description = "Search Controller")
 public class SearchController {
 
     private final SearchService searchService;
@@ -28,7 +28,7 @@ public class SearchController {
     @ApiResponses(value = {
             @ApiResponse(code = 200, message = "OK", response = List.class),
             @ApiResponse(code = 404, message = "Not Found")})
-    @RequestMapping(value = "/queue/{query}/{location}", //query params look in description tags name of the queue
+    @RequestMapping(value = "v1/search/queue/{query}/{location}", //query params look in description tags name of the queue
             produces = {"application/json"},
             method = RequestMethod.GET)
     public ResponseEntity<List<QueueResponse>> searchQueueByQueryAndLocation(@PathVariable("query") String query,
@@ -44,7 +44,7 @@ public class SearchController {
     @ApiResponses(value = {
             @ApiResponse(code = 200, message = "OK", response = List.class),
             @ApiResponse(code = 404, message = "Not Found")})
-    @RequestMapping(value = "/provider/{name}/{location}", // provider = person with at least one queue !
+    @RequestMapping(value = "v1/search/provider/{name}/{location}", // provider = person with at least one queue !
             produces = {"application/json"},
             method = RequestMethod.GET)
     public ResponseEntity<List<UserResponse>> searchProviderByNameAndLocation(@PathVariable("name") String name,

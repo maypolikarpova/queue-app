@@ -23,8 +23,6 @@ public class SearchService {
     }
 
     public List<UserResponse> searchProviderByNameAndLocation(String name, String location) {
-
-
         return null;
     }
 

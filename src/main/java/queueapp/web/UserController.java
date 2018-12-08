@@ -17,7 +17,7 @@ import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
-@Api(value = "v1/user", description = "User Controller")
+@Api(value = "v1/", description = "User Controller")
 public class UserController {
 
     private final UserService userService;
@@ -26,7 +26,7 @@ public class UserController {
     @ApiResponses(value = {
             @ApiResponse(code = 201, message = "Created", response = UserResponse.class),
             @ApiResponse(code = 400, message = "Bad request")})
-    @RequestMapping(value = "/signup",
+    @RequestMapping(value = "v1/user/signup",
             produces = {"application/json"},
             method = RequestMethod.POST)
     public ResponseEntity<UserResponse> signUpUser(@RequestBody CreateUserRequest user) {
@@ -39,7 +39,7 @@ public class UserController {
     @ApiResponses(value = {
             @ApiResponse(code = 200, message = "OK", response = UserResponse.class),
             @ApiResponse(code = 404, message = "Not Found")})
-    @RequestMapping(value = "/{user-id}",
+    @RequestMapping(value = "v1/user/{user-id}",
             produces = {"application/json"},
             method = RequestMethod.GET)
     public ResponseEntity<UserResponse> readUser(@PathVariable("user-id") String userId) {
@@ -52,7 +52,7 @@ public class UserController {
     @ApiResponses(value = {
             @ApiResponse(code = 200, message = "OK", response = UserResponse.class),
             @ApiResponse(code = 400, message = "Bad Request")})
-    @RequestMapping(value = "/{user-id}",
+    @RequestMapping(value = "v1/user/{user-id}",
             produces = {"application/json"},
             method = RequestMethod.PATCH)
     public ResponseEntity<UserResponse> updateUserInfo(@PathVariable("user-id") String userId,
@@ -66,7 +66,7 @@ public class UserController {
     @ApiResponses(value = {
             @ApiResponse(code = 200, message = "OK", response = String.class),
             @ApiResponse(code = 404, message = "Not Found", response = String.class)})
-    @RequestMapping(value = "/{user-id}/password",
+    @RequestMapping(value = "v1/user/{user-id}/password",
             produces = {"application/json"},
             method = RequestMethod.PATCH)
     public ResponseEntity<Void> updateUserPassword(@PathVariable("user-id") String userId,
@@ -80,7 +80,7 @@ public class UserController {
     @ApiResponses(value = {
             @ApiResponse(code = 204, message = "No content"),
             @ApiResponse(code = 404, message = "Not Found")})
-    @RequestMapping(value = "/{user-id}",
+    @RequestMapping(value = "v1/user/{user-id}",
             produces = {"application/json"},
             method = RequestMethod.DELETE)
     public ResponseEntity<Void> deleteUser(@PathVariable("user-id") String userId) {
@@ -93,7 +93,7 @@ public class UserController {
     @ApiResponses(value = {
             @ApiResponse(code = 200, message = "OK", response = User.class),
             @ApiResponse(code = 404, message = "Not Found", response = String.class)})
-    @RequestMapping(value = "/login",
+    @RequestMapping(value = "v1/user/login",
             produces = {"application/json"},
             method = RequestMethod.POST)
     public ResponseEntity<User> logInUser(@RequestBody LogInUserRequest logInUserRequest) {
@@ -106,7 +106,7 @@ public class UserController {
     @ApiResponses(value = {
             @ApiResponse(code = 200, message = "OK", response = String.class),
             @ApiResponse(code = 404, message = "Not Found", response = String.class)})
-    @RequestMapping(value = "/logout",
+    @RequestMapping(value = "v1/user/logout",
             produces = {"application/json"},
             method = RequestMethod.DELETE)
     //TODO implement
@@ -118,7 +118,7 @@ public class UserController {
     @ApiResponses(value = {
             @ApiResponse(code = 200, message = "OK", response = Queue.class),
             @ApiResponse(code = 404, message = "Not Found", response = List.class)})
-    @RequestMapping(value = "/{provider-id}/queues",
+    @RequestMapping(value = "v1/user/{provider-id}/queues",
             produces = {"application/json"},
             method = RequestMethod.GET)
     public ResponseEntity<List<QueueResponse>> readQueuesByProviderId(@PathVariable("provider-id") String queueId) {
@@ -132,7 +132,7 @@ public class UserController {
     @ApiResponses(value = {
             @ApiResponse(code = 200, message = "OK", response = Queue.class),
             @ApiResponse(code = 404, message = "Not Found", response = List.class)})
-    @RequestMapping(value = "/{client-id}/appointments/{status}",
+    @RequestMapping(value = "v1/user/{client-id}/appointments/{status}",
             produces = {"application/json"},
             method = RequestMethod.GET)
     public ResponseEntity<List<QueueResponse>> readQueuesByClientId(@PathVariable("client-id") String clientId) {
