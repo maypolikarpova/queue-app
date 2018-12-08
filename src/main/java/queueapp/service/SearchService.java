@@ -55,41 +55,41 @@ public class SearchService {
 
     private List<Queue> findQueuesByQueryOrLocation(String query, String location) {
         return queueRepository.findAll().stream()
-                       .filter(q -> (q.getName().contains(query)
-                                            || q.getDescription().contains(query))
-                                            && q.getAddress().contains(location))
+                       .filter(q -> (q.getName().toLowerCase().contains(query.toLowerCase())
+                                            || q.getDescription().toLowerCase().contains(query.toLowerCase()))
+                                            && q.getAddress().toLowerCase().contains(location.toLowerCase()))
                        .collect(Collectors.toList());
     }
 
     private List<Queue> findQueuesByQuery(String query) {
         return queueRepository.findAll().stream()
-                       .filter(q -> q.getName().contains(query)
-                                            || q.getDescription().contains(query))
+                       .filter(q -> q.getName().toLowerCase().contains(query.toLowerCase())
+                                            || q.getDescription().toLowerCase().contains(query.toLowerCase()))
                        .collect(Collectors.toList());
     }
 
     private List<Queue> findQueuesByLocation(String location) {
         return queueRepository.findAll().stream()
-                       .filter(q -> q.getAddress().contains(location))
+                       .filter(q -> q.getAddress().toLowerCase().contains(location.toLowerCase()))
                        .collect(Collectors.toList());
     }
 
     private List<User> findUsersByNameOrLocation(String name, String location) {
         return userRepository.findAll().stream()
-                       .filter(u -> u.getName().contains(name)
-                                            && u.getAddress().contains(location))
+                       .filter(u -> u.getName().toLowerCase().contains(name.toLowerCase())
+                                            && u.getAddress().toLowerCase().contains(location.toLowerCase()))
                        .collect(Collectors.toList());
     }
 
     private List<User> findUsersByName(String name) {
         return userRepository.findAll().stream()
-                       .filter(u -> u.getName().contains(name))
+                       .filter(u -> u.getName().toLowerCase().contains(name.toLowerCase()))
                        .collect(Collectors.toList());
     }
 
     private List<User> findUsersByLocation(String location) {
         return userRepository.findAll().stream()
-                       .filter(u -> u.getAddress().contains(location))
+                       .filter(u -> u.getAddress().toLowerCase().contains(location.toLowerCase()))
                        .collect(Collectors.toList());
     }
 

@@ -42,7 +42,7 @@ public class SearchController {
             produces = {"application/json"},
             method = RequestMethod.GET)
     public ResponseEntity<List<UserResponse>> searchProviderByNameAndLocation(
-            @RequestParam(name = "name", required = false) String name,
+            @RequestParam(name = "query", required = false) String name,
             @RequestParam(name = "location", required = false) String location) {
         List<UserResponse> responses = searchService.searchProviderByNameAndLocation(name, location);
         return CollectionUtils.isEmpty(responses)
