@@ -11,5 +11,5 @@ public class UpdateUserRequest {
     private String email;
     private String name;
     private String phoneNumber;
-    private byte[] photo;
+    private String photo;
 }
