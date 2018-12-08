@@ -39,12 +39,12 @@ public class UserService {
     }
 
     public Optional<UserResponse> readUser(String userId) {
-        return userRepository.findById(userId)
+        return Optional.ofNullable(userRepository.findOne(userId))
                        .flatMap(userMapper::mapToUserResponse);
     }
 
     public Optional<UserResponse> updateUser(String userId, UpdateUserRequest request) {
-        Optional<User> optionalUser = userRepository.findById(userId);
+        Optional<User> optionalUser = Optional.ofNullable(userRepository.findOne(userId));
 
         if (optionalUser.isPresent() && Optional.ofNullable(request).isPresent()) {
             return userMapper.mapToUserResponse(updateUserInfo(optionalUser.get(), request));
@@ -54,7 +54,7 @@ public class UserService {
     }
 
     public boolean updateUserPassword(String userId, String oldPassword, String newPassword) {
-        return userRepository.findById(userId)
+        return Optional.ofNullable(userRepository.findOne(userId))
                        .filter(c -> validatePassword(c.getPassword(), oldPassword))
                        .map(c -> updatePassword(c, newPassword))
                        .orElse(false);
@@ -62,8 +62,8 @@ public class UserService {
     }
 
     public boolean deleteUser(String userId) {
-        if (userRepository.existsById(userId)) {
-            userRepository.deleteById(userId);
+        if (userRepository.exists(userId)) {
+            userRepository.delete(userId);
             return true;
         }
         return false;
@@ -86,7 +86,7 @@ public class UserService {
         List<Queue> queues = new ArrayList<>();
 
         for (String id : queueIds) {
-            queueRepository.findById(id)
+            Optional.ofNullable(queueRepository.findOne(id))
                     .map(queues::add);
         }
 
@@ -94,7 +94,7 @@ public class UserService {
     }
 
     private boolean validatePassword(String userPassword, String oldPassword) {
-        return userPassword.equals(oldPassword); //TODO if user password in db is hashed or encrypted - decrypt!
+        return userPassword.equals(oldPassword);
     }
 
     private boolean updatePassword(User user, String newPassword) {

@@ -24,23 +24,23 @@ public class QueueService {
     }
 
     public Optional<QueueResponse> readQueueByQueueId(String queueId) {
-        return queueRepository.findById(queueId)
+        return Optional.ofNullable(queueRepository.findOne(queueId))
                        .flatMap(queueMapper::mapToQueueResponse);
     }
 
     public Optional<QueueResponse> updateQueue(String queueId, UpdateQueueRequest request) {
-        return queueRepository.findById(queueId)
+        return Optional.ofNullable(queueRepository.findOne(queueId))
                        .flatMap(q -> updateQueueFieldsAndSave(q, request));
     }
 
     public Optional<QueueResponse> toggleQueueState(String queueId) {
-        return queueRepository.findById(queueId)
+        return Optional.ofNullable(queueRepository.findOne(queueId))
                        .flatMap(this::toggleQueueState);
     }
 
     public boolean deleteQueue(String queueId) {
-        if (queueRepository.existsById(queueId)) {
-            queueRepository.deleteById(queueId);
+        if (queueRepository.exists(queueId)) {
+            queueRepository.delete(queueId);
             return true;
         }
         return false;

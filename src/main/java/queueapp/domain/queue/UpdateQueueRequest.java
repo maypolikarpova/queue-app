@@ -1,8 +1,12 @@
 package queueapp.domain.queue;
 
-import lombok.Value;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
-@Value
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
 public class UpdateQueueRequest {
     private String name;
     private String description;

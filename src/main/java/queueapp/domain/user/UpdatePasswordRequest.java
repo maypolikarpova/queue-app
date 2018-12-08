@@ -1,9 +1,13 @@
 package queueapp.domain.user;
 
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 import lombok.NonNull;
-import lombok.Value;
 
-@Value
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
 public class UpdatePasswordRequest {
     @NonNull
     private String oldPassword;

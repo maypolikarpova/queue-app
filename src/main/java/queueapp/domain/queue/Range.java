@@ -1,10 +1,14 @@
 package queueapp.domain.queue;
 
-import lombok.Value;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
 
-@Value
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
 public class Range {
     private LocalDateTime dateTimeFrom;
     private LocalDateTime dateTimeTo;

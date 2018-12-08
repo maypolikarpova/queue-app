@@ -1,8 +1,12 @@
 package queueapp.domain.user;
 
-import lombok.Value;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
-@Value
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
 public class CreateUserRequest {
 
     private String email;
@@ -10,4 +14,5 @@ public class CreateUserRequest {
     private String phoneNumber;
     private String name;
     private byte[] photo; //TODO what the hell with pics
+
 }

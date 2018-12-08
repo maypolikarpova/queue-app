@@ -46,21 +46,21 @@ public class AppointmentService {
     }
 
     public boolean requestAppointmentFromClient(String appointmentId, String clientId) {
-        return appointmentRepository.findById(appointmentId)
+        return Optional.ofNullable(appointmentRepository.findOne(appointmentId))
                        .filter(a -> a.getClientId().equals(clientId))
                        .map(a -> updateAppointmentStatusAndSave(a, AppointmentStatus.REQUESTED))
                        .orElse(false);
     }
 
     public boolean updateAppointmentStatus(String appointmentId, AppointmentStatus status) {
-        return appointmentRepository.findById(appointmentId)
+        return Optional.ofNullable(appointmentRepository.findOne(appointmentId))
                        .map(a -> updateAppointmentStatusAndSave(a, status))
                        .orElse(false);
     }
 
     public boolean deleteAppointment(String registryId) {
-        if (appointmentRepository.existsById(registryId)) {
-            appointmentRepository.deleteById(registryId);
+        if (appointmentRepository.exists(registryId)) {
+            appointmentRepository.delete(registryId);
             return true;
         }
         return false;

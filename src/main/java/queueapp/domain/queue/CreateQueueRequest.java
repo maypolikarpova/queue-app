@@ -1,10 +1,14 @@
 package queueapp.domain.queue;
 
-import lombok.Value;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.util.List;
 
-@Value
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
 public class CreateQueueRequest {
     private String providerId;
     private String name;
