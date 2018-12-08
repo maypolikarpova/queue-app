@@ -94,7 +94,7 @@ public class QueueAppTestData {
         ruslansQueue1.setName("Черга за зарахом");
         ruslansQueue1.setProviderId("ruslan");
         ruslansQueue1.setDescription("Приєднуйтесь до черги за зарахом з групового проекту!");
-        ruslansQueue1.setAddress("2, вулиця Григорія Сковороди, Київ, 04655");
+        ruslansQueue1.setAddress("2, вул Григорія Сковороди, Київ, 04655");
         ruslansQueue1.setPhoneNumber("380687117334");
         ruslansQueue1.setClosed(false);
         ruslansQueue1.setQueueId("ruslansQueue1");
@@ -107,7 +107,7 @@ public class QueueAppTestData {
         ruslansQueue2.setName("Розмови про життя під вінішко");
         ruslansQueue2.setProviderId("ruslan");
         ruslansQueue2.setDescription("Вінішко, розмови про життя та музика на кухні у Майї");
-        ruslansQueue2.setAddress("квартира 143, вулиця Челябінська 19, Київ, Україна");
+        ruslansQueue2.setAddress("кв 143, вул Челябінська 19, Київ, Україна");
         ruslansQueue2.setPhoneNumber("380687117334");
         ruslansQueue2.setClosed(false);
         ruslansQueue2.setQueueId("ruslansQueue2");
@@ -120,7 +120,7 @@ public class QueueAppTestData {
         sofisQueue.setName("Вчу готувати, не дорого");
         sofisQueue.setProviderId("sofi");
         sofisQueue.setDescription("Навчу готувати за годину. Якщо не навчу - хоч нагодую");
-        sofisQueue.setAddress("14Б, вулиця Марини Цвєтаєвої, Київ, Україна");
+        sofisQueue.setAddress("14Б, вул Марини Цвєтаєвої, Київ, Україна");
         sofisQueue.setPhoneNumber("380971237159");
         sofisQueue.setClosed(false);
         sofisQueue.setQueueId("sofisQueue");

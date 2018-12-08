@@ -1,6 +1,7 @@
 package queueapp.service;
 
 import lombok.RequiredArgsConstructor;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
 import queueapp.domain.queue.Queue;
 import queueapp.domain.queue.QueueResponse;
@@ -27,11 +28,11 @@ public class SearchService {
     public List<QueueResponse> searchQueueByQueryAndLocation(String query, String location) {
         List<Queue> queues = new ArrayList<>();
 
-        if (query != null && location != null) {
+        if (StringUtils.isNotBlank(query) && StringUtils.isNotBlank(location)) {
             queues = findQueuesByQueryOrLocation(query, location);
-        } else if (query != null) {
+        } else if (StringUtils.isNotBlank(query)) {
             queues = findQueuesByQuery(query);
-        } else {
+        } else if (StringUtils.isNotBlank(location)) {
             queues = findQueuesByLocation(location);
         }
 
@@ -41,11 +42,11 @@ public class SearchService {
     public List<UserResponse> searchProviderByNameAndLocation(String name, String location) {
         List<User> users = new ArrayList<>();
 
-        if (name != null && location != null) {
+        if (StringUtils.isNotBlank(name) && StringUtils.isNotBlank(location)) {
             users = findUsersByNameOrLocation(name, location);
-        } else if (name != null) {
+        } else if (StringUtils.isNotBlank(name)) {
             users = findUsersByName(name);
-        } else {
+        } else if (StringUtils.isNotBlank(location)) {
             users = findUsersByLocation(location);
         }
 
@@ -54,9 +55,9 @@ public class SearchService {
 
     private List<Queue> findQueuesByQueryOrLocation(String query, String location) {
         return queueRepository.findAll().stream()
-                       .filter(q -> q.getName().contains(query)
-                                            || q.getDescription().contains(query)
-                                            || q.getAddress().contains(location))
+                       .filter(q -> (q.getName().contains(query)
+                                            || q.getDescription().contains(query))
+                                            && q.getAddress().contains(location))
                        .collect(Collectors.toList());
     }
 
@@ -76,7 +77,7 @@ public class SearchService {
     private List<User> findUsersByNameOrLocation(String name, String location) {
         return userRepository.findAll().stream()
                        .filter(u -> u.getName().contains(name)
-                                            || u.getAddress().contains(location))
+                                            && u.getAddress().contains(location))
                        .collect(Collectors.toList());
     }
 
