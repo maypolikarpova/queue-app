@@ -22,7 +22,7 @@ public class SearchController {
     @ApiResponses(value = {
             @ApiResponse(code = 200, message = "OK", response = List.class),
             @ApiResponse(code = 404, message = "Not Found")})
-    @RequestMapping(value = "v1/search/queue/",
+    @RequestMapping(value = "v1/search/queue",
             produces = {"application/json"},
             method = RequestMethod.GET)
     public ResponseEntity<List<QueueResponse>> searchQueueByQueryAndLocation(@RequestParam(name = "query", required = false) String query,
@@ -38,7 +38,7 @@ public class SearchController {
     @ApiResponses(value = {
             @ApiResponse(code = 200, message = "OK", response = List.class),
             @ApiResponse(code = 404, message = "Not Found")})
-    @RequestMapping(value = "v1/search/provider/",
+    @RequestMapping(value = "v1/search/provider",
             produces = {"application/json"},
             method = RequestMethod.GET)
     public ResponseEntity<List<UserResponse>> searchProviderByNameAndLocation(
