@@ -73,7 +73,6 @@ public class AppointmentService {
         List<Appointment> appointments = appointmentRepository.findByQueueIdAndStatus(queueId, AppointmentStatus.APPROVED);
 
         return appointments.stream()
-                       .sorted()// TODO Wrong logic?
                        .findFirst()
                        .map(Appointment::getDateTimeFrom)
                        .orElseGet(() -> null);
@@ -83,7 +82,6 @@ public class AppointmentService {
         List<Appointment> appointments = appointmentRepository.findByQueueIdAndStatus(queueId, AppointmentStatus.CREATED);
 
         return appointments.stream()
-                       .sorted()// TODO Wrong logic?
                        .findFirst()
                        .map(Appointment::getDateTimeFrom)
                        .orElseGet(() -> null);

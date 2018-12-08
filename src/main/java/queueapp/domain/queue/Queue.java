@@ -19,6 +19,5 @@ public class Queue {
     private String description;
     private List<String> tags;
     private String address;
-    private List<Range> ranges;
     private String phoneNumber;
 }

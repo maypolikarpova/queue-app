@@ -131,7 +131,7 @@ public class QueueAppTestData {
     private Appointment maysAppointmentToRuslansQueue1(){
         Appointment maysAppointment1 = new Appointment();
         maysAppointment1.setStatus(AppointmentStatus.APPROVED);
-        maysAppointment1.setQueueId("ruslanQueue1");
+        maysAppointment1.setQueueId("ruslansQueue1");
         maysAppointment1.setAppointmentId("maysAppointment1");
         maysAppointment1.setClientId("may");
         maysAppointment1.setDateTimeFrom(LocalDateTime.parse("2018-12-12T10:00:00.000"));
@@ -142,7 +142,7 @@ public class QueueAppTestData {
     private Appointment sofisAppointmentToRuslansQueue1(){
         Appointment sofisAppointment1 = new Appointment();
         sofisAppointment1.setStatus(AppointmentStatus.APPROVED);
-        sofisAppointment1.setQueueId("ruslanQueue1");
+        sofisAppointment1.setQueueId("ruslansQueue1");
         sofisAppointment1.setAppointmentId("sofisAppointment1");
         sofisAppointment1.setClientId("sofi");
         sofisAppointment1.setDateTimeFrom(LocalDateTime.parse("2018-12-12T10:10:00.000"));
@@ -154,7 +154,7 @@ public class QueueAppTestData {
     private Appointment maysAppointmentToRuslansQueue2(){
         Appointment maysAppointment2 = new Appointment();
         maysAppointment2.setStatus(AppointmentStatus.CREATED);
-        maysAppointment2.setQueueId("ruslanQueue2");
+        maysAppointment2.setQueueId("ruslansQueue2");
         maysAppointment2.setAppointmentId("maysAppointment2");
         maysAppointment2.setClientId("may");
         maysAppointment2.setDateTimeFrom(LocalDateTime.parse("2018-12-15T15:00:00.000"));
@@ -165,7 +165,7 @@ public class QueueAppTestData {
     private Appointment sofisAppointmentToRuslansQueue2(){
         Appointment sofisAppointment2 = new Appointment();
         sofisAppointment2.setStatus(AppointmentStatus.CREATED);
-        sofisAppointment2.setQueueId("ruslanQueue2");
+        sofisAppointment2.setQueueId("ruslansQueue2");
         sofisAppointment2.setAppointmentId("sofisAppointment2");
         sofisAppointment2.setClientId("sofi");
         sofisAppointment2.setDateTimeFrom(LocalDateTime.parse("2018-12-15T15:30:00.000"));

@@ -27,7 +27,6 @@ public class QueueMapper {
                            queue.setDescription(r.getDescription());
                            queue.setPhoneNumber(r.getPhoneNumber());
                            queue.setTags(r.getTags());
-                           queue.setRanges(r.getRanges());
 
                            return queue;
                        });
