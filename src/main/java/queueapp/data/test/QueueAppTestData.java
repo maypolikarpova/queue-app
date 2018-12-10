@@ -134,8 +134,8 @@ public class QueueAppTestData {
         maysAppointment1.setQueueId("ruslansQueue1");
         maysAppointment1.setAppointmentId("maysAppointment1");
         maysAppointment1.setClientId("may");
-        maysAppointment1.setDateTimeFrom(LocalDateTime.parse("2018-12-12T10:00:00.000"));
-        maysAppointment1.setDateTimeTo(LocalDateTime.parse("2018-12-12T10:10:00.000"));
+        maysAppointment1.setDateTimeFrom(LocalDateTime.parse("2018-12-17T10:00:00.000"));
+        maysAppointment1.setDateTimeTo(LocalDateTime.parse("2018-12-17T10:10:00.000"));
 
         return maysAppointment1;
     }
@@ -145,8 +145,8 @@ public class QueueAppTestData {
         sofisAppointment1.setQueueId("ruslansQueue1");
         sofisAppointment1.setAppointmentId("sofisAppointment1");
         sofisAppointment1.setClientId("sofi");
-        sofisAppointment1.setDateTimeFrom(LocalDateTime.parse("2018-12-12T10:10:00.000"));
-        sofisAppointment1.setDateTimeTo(LocalDateTime.parse("2018-12-12T10:20:00.000"));
+        sofisAppointment1.setDateTimeFrom(LocalDateTime.parse("2018-12-17T10:10:00.000"));
+        sofisAppointment1.setDateTimeTo(LocalDateTime.parse("2018-12-17T10:20:00.000"));
 
         return sofisAppointment1;
     }
@@ -157,8 +157,8 @@ public class QueueAppTestData {
         maysAppointment2.setQueueId("ruslansQueue2");
         maysAppointment2.setAppointmentId("maysAppointment2");
         maysAppointment2.setClientId("may");
-        maysAppointment2.setDateTimeFrom(LocalDateTime.parse("2018-12-15T15:00:00.000"));
-        maysAppointment2.setDateTimeTo(LocalDateTime.parse("2018-12-15T15:30:00.000"));
+        maysAppointment2.setDateTimeFrom(LocalDateTime.parse("2018-12-17T15:00:00.000"));
+        maysAppointment2.setDateTimeTo(LocalDateTime.parse("2018-12-17T15:30:00.000"));
 
         return maysAppointment2;
     }
@@ -168,8 +168,8 @@ public class QueueAppTestData {
         sofisAppointment2.setQueueId("ruslansQueue2");
         sofisAppointment2.setAppointmentId("sofisAppointment2");
         sofisAppointment2.setClientId("sofi");
-        sofisAppointment2.setDateTimeFrom(LocalDateTime.parse("2018-12-15T15:30:00.000"));
-        sofisAppointment2.setDateTimeTo(LocalDateTime.parse("2018-12-15T16:00:00.000"));
+        sofisAppointment2.setDateTimeFrom(LocalDateTime.parse("2018-12-17T15:30:00.000"));
+        sofisAppointment2.setDateTimeTo(LocalDateTime.parse("2018-12-17T16:00:00.000"));
 
         return sofisAppointment2;
     }
