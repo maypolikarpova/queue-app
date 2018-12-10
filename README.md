@@ -6,5 +6,5 @@ This app will help you to create/edit/delete your queues for anything you are tr
 ## Authors
 
 * May Polikarpova (java backend, here)
-* Ruslan Purii (react frontend, not here, thank gods)
+* Ruslan Purii (react frontend, not here, thank gods) => https://github.com/onlyarte/queue-react
 * Sofiia Ryliuk (management, testing, food suppy)
