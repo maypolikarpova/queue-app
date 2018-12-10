@@ -8,7 +8,10 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import queueapp.domain.appointment.AppointmentStatus;
+import queueapp.domain.appointment.RequestAppointmentRequest;
 import queueapp.service.AppointmentService;
+
+import javax.validation.constraints.NotNull;
 
 @RestController
 @RequiredArgsConstructor
@@ -26,8 +29,8 @@ public class AppointmentController {
             produces = {"application/json"},
             method = RequestMethod.PATCH)
     public ResponseEntity<Void> requestAppointment(@PathVariable("appointment-id") String appointmentId,
-                                                   @RequestBody String clientId) {
-        return appointmentService.requestAppointmentFromClient(appointmentId, clientId)
+                                                   @RequestBody @NotNull RequestAppointmentRequest clientId) {
+        return appointmentService.requestAppointmentFromClient(appointmentId, clientId.getClientId())
                        ? ResponseEntity.ok().build()
                        : ResponseEntity.notFound().build();
     }
