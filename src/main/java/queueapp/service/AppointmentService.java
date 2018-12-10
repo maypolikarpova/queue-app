@@ -40,7 +40,7 @@ public class AppointmentService {
     public boolean requestAppointmentFromClient(String appointmentId, String clientId) {
         return Optional.ofNullable(appointmentRepository.findOne(appointmentId))
                        .filter(a -> a.getClientId().equals(clientId))
-                       .map(a -> updateAppointmentStatusAndSave(a, AppointmentStatus.REQUESTED))
+                       .map(a -> requestAppointment(a, AppointmentStatus.REQUESTED, clientId))
                        .orElse(false);
     }
 
@@ -88,6 +88,13 @@ public class AppointmentService {
     }
 
     private boolean updateAppointmentStatusAndSave(Appointment appointment, AppointmentStatus status) {
+        appointment.setStatus(status);
+        return Optional.ofNullable(appointmentRepository.save(appointment))
+                       .isPresent();
+    }
+
+    private boolean requestAppointment(Appointment appointment, AppointmentStatus status, String clientId) {
+        appointment.setClientId(clientId);
         appointment.setStatus(status);
         return Optional.ofNullable(appointmentRepository.save(appointment))
                        .isPresent();

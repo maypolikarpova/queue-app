@@ -153,7 +153,7 @@ public class QueueAppTestData {
 
     private Appointment maysAppointmentToRuslansQueue2(){
         Appointment maysAppointment2 = new Appointment();
-        maysAppointment2.setStatus(AppointmentStatus.CREATED);
+        maysAppointment2.setStatus(AppointmentStatus.REQUESTED);
         maysAppointment2.setQueueId("ruslansQueue2");
         maysAppointment2.setAppointmentId("maysAppointment2");
         maysAppointment2.setClientId("may");
@@ -164,7 +164,7 @@ public class QueueAppTestData {
     }
     private Appointment sofisAppointmentToRuslansQueue2(){
         Appointment sofisAppointment2 = new Appointment();
-        sofisAppointment2.setStatus(AppointmentStatus.CREATED);
+        sofisAppointment2.setStatus(AppointmentStatus.REQUESTED);
         sofisAppointment2.setQueueId("ruslansQueue2");
         sofisAppointment2.setAppointmentId("sofisAppointment2");
         sofisAppointment2.setClientId("sofi");
@@ -176,7 +176,7 @@ public class QueueAppTestData {
 
     private Appointment maysAppointmentToSofisQueue(){
         Appointment maysAppointment3 = new Appointment();
-        maysAppointment3.setStatus(AppointmentStatus.CREATED);
+        maysAppointment3.setStatus(AppointmentStatus.REQUESTED);
         maysAppointment3.setQueueId("sofisQueue");
         maysAppointment3.setAppointmentId("maysAppointment3");
         maysAppointment3.setClientId("may");
@@ -187,7 +187,7 @@ public class QueueAppTestData {
     }
     private Appointment ruslansAppointmentToSofisQueue(){
         Appointment ruslansAppointment = new Appointment();
-        ruslansAppointment.setStatus(AppointmentStatus.CREATED);
+        ruslansAppointment.setStatus(AppointmentStatus.REQUESTED);
         ruslansAppointment.setQueueId("sofisQueue");
         ruslansAppointment.setAppointmentId("ruslansAppointment");
         ruslansAppointment.setClientId("ruslan");
