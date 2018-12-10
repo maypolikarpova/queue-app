@@ -2,20 +2,18 @@ package queueapp.service;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-import queueapp.domain.appointment.Appointment;
-import queueapp.domain.queue.Queue;
+import queueapp.domain.appointment.ReadAppointmentByClientIdResponse;
 import queueapp.domain.queue.QueueResponse;
 import queueapp.domain.user.*;
 import queueapp.repository.AppointmentRepository;
 import queueapp.repository.QueueRepository;
 import queueapp.repository.UserRepository;
+import queueapp.service.mapper.AppointmentMapper;
 import queueapp.service.mapper.QueueMapper;
 import queueapp.service.mapper.UserMapper;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -26,6 +24,7 @@ public class UserService {
     private final AppointmentRepository appointmentRepository;
     private final UserMapper userMapper;
     private final QueueMapper queueMapper;
+    private final AppointmentMapper appointmentMapper;
 
     public Optional<UserResponse> createUser(CreateUserRequest request) {
         Optional<User> savedUser = userMapper.mapToUser(request)
@@ -78,19 +77,8 @@ public class UserService {
         return queueMapper.mapToQueueResponses(queueRepository.findByProviderId(providerId));
     }
 
-    public List<QueueResponse> readQueuesByClientId(String clientId) {
-        List<String> queueIds = appointmentRepository.findByClientId(clientId)
-                                        .stream()
-                                        .map(Appointment::getQueueId)
-                                        .collect(Collectors.toList());
-        List<Queue> queues = new ArrayList<>();
-
-        for (String id : queueIds) {
-            Optional.ofNullable(queueRepository.findOne(id))
-                    .map(queues::add);
-        }
-
-        return queueMapper.mapToQueueResponses(queues);
+    public List<ReadAppointmentByClientIdResponse> readQueuesByClientId(String clientId) {
+        return appointmentMapper.mapToReadAppointmentByClientIdResponseList(appointmentRepository.findByClientId(clientId));
     }
 
     private boolean validatePassword(String userPassword, String oldPassword) {

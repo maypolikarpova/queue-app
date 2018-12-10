@@ -8,6 +8,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.util.CollectionUtils;
 import org.springframework.web.bind.annotation.*;
+import queueapp.domain.appointment.ReadAppointmentByClientIdResponse;
 import queueapp.domain.queue.Queue;
 import queueapp.domain.queue.QueueResponse;
 import queueapp.domain.user.*;
@@ -135,8 +136,8 @@ public class UserController {
     @RequestMapping(value = "v1/user/{client-id}/appointments",
             produces = {"application/json"},
             method = RequestMethod.GET)
-    public ResponseEntity<List<QueueResponse>> readQueuesByClientId(@PathVariable("client-id") String clientId) {
-        List<QueueResponse> responses = userService.readQueuesByClientId(clientId);
+    public ResponseEntity<List<ReadAppointmentByClientIdResponse>> readQueuesByClientId(@PathVariable("client-id") String clientId) {
+        List<ReadAppointmentByClientIdResponse> responses = userService.readQueuesByClientId(clientId);
         return CollectionUtils.isEmpty(responses)
                        ? ResponseEntity.notFound().build()
                        : ResponseEntity.ok(responses);
