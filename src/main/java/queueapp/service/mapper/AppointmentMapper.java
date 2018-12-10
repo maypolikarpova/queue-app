@@ -1,15 +1,22 @@
 package queueapp.service.mapper;
 
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 import queueapp.domain.appointment.Appointment;
 import queueapp.domain.appointment.ReadAppointmentResponse;
 import queueapp.domain.user.UserResponse;
+import queueapp.repository.UserRepository;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Component
+@RequiredArgsConstructor
 public class AppointmentMapper {
+
+    private final UserRepository userRepository;
+    private final UserMapper userMapper;
 
     public List<ReadAppointmentResponse> mapToReadAppointmentResponseList(List<Appointment> appointments) {
         return appointments.stream()
@@ -29,6 +36,8 @@ public class AppointmentMapper {
     }
 
     private UserResponse mapToUserResponse(String clientId) {
-        return null;// ?????
+        return Optional.ofNullable(userRepository.findOne(clientId))
+                .flatMap(userMapper::mapToUserResponse)
+                .orElse(null);
     }
 }

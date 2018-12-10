@@ -6,13 +6,9 @@ import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.util.CollectionUtils;
 import org.springframework.web.bind.annotation.*;
 import queueapp.domain.appointment.AppointmentStatus;
-import queueapp.domain.queue.Range;
 import queueapp.service.AppointmentService;
-
-import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
@@ -26,11 +22,11 @@ public class AppointmentController {
             @ApiResponse(code = 200, message = "OK"),
             @ApiResponse(code = 400, message = "Bad Request"),
             @ApiResponse(code = 404, message = "Not Found")})
-    @RequestMapping(value = "v1/appointment/{appointment-id}/client/{client-id}/status/requested",
+    @RequestMapping(value = "v1/appointment/{appointment-id}/request",
             produces = {"application/json"},
             method = RequestMethod.PATCH)
     public ResponseEntity<Void> requestAppointment(@PathVariable("appointment-id") String appointmentId,
-                                                   @PathVariable("client-id") String clientId) {
+                                                   @RequestBody String clientId) {
         return appointmentService.requestAppointmentFromClient(appointmentId, clientId)
                        ? ResponseEntity.ok().build()
                        : ResponseEntity.notFound().build();
@@ -41,7 +37,7 @@ public class AppointmentController {
             @ApiResponse(code = 200, message = "OK"),
             @ApiResponse(code = 400, message = "Bad Request"),
             @ApiResponse(code = 404, message = "Not Found")})
-    @RequestMapping(value = "v1/appointment/{appointment-id}/status/cancelled",
+    @RequestMapping(value = "v1/appointment/{appointment-id}/cancel",
             produces = {"application/json"},
             method = RequestMethod.PATCH)
     public ResponseEntity<String> cancelAppointment(@PathVariable("appointment-id") String appointmentId) {
@@ -55,7 +51,7 @@ public class AppointmentController {
             @ApiResponse(code = 200, message = "OK"),
             @ApiResponse(code = 400, message = "Bad Request"),
             @ApiResponse(code = 404, message = "Not Found")})
-    @RequestMapping(value = "v1/appointment/{appointment-id}/provider/{provider-id}/status/approved",
+    @RequestMapping(value = "v1/appointment/{appointment-id}/approve",
             produces = {"application/json"},
             method = RequestMethod.PATCH)
     public ResponseEntity<String> approveAppointment(@PathVariable("appointment-id") String appointmentId) {
@@ -75,21 +71,5 @@ public class AppointmentController {
         return appointmentService.deleteAppointment(appointmentId)
                        ? ResponseEntity.noContent().build()
                        : ResponseEntity.notFound().build();
-    }
-
-    @ApiOperation(value = "Create new appointment", nickname = "createRegistry")
-    @ApiResponses(value = {
-            @ApiResponse(code = 201, message = "Created"),
-            @ApiResponse(code = 400, message = "Bad Request")})
-    @RequestMapping(value = "v1/appointment/queue/{queue-id}",
-            produces = {"application/json"},
-            method = RequestMethod.POST)
-    public ResponseEntity<List<String>> createAppointments(@PathVariable("queue-id") String queueId,
-                                                           @RequestBody List<Range> ranges) {
-        List<String> appointmentsIds = appointmentService.createAppointments(queueId, ranges);
-
-        return CollectionUtils.isEmpty(appointmentsIds)
-                       ? ResponseEntity.notFound().build()
-                       : ResponseEntity.ok(appointmentsIds);
     }
 }

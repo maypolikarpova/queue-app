@@ -11,7 +11,9 @@ import org.springframework.web.bind.annotation.*;
 import queueapp.domain.appointment.ReadAppointmentResponse;
 import queueapp.domain.queue.CreateQueueRequest;
 import queueapp.domain.queue.QueueResponse;
+import queueapp.domain.queue.Range;
 import queueapp.domain.queue.UpdateQueueRequest;
+import queueapp.service.AppointmentService;
 import queueapp.service.QueueService;
 
 import java.util.List;
@@ -22,6 +24,7 @@ import java.util.List;
 public class QueueController {
 
     private final QueueService queueService;
+    private final AppointmentService appointmentService;
 
     @ApiOperation(value = "Create new Queue", nickname = "createQueue", response = String.class)
     @ApiResponses(value = {
@@ -76,6 +79,22 @@ public class QueueController {
                        : ResponseEntity.noContent().build();
     }
 
+    @ApiOperation(value = "Create new appointment for given queue", nickname = "createAppointments")
+    @ApiResponses(value = {
+            @ApiResponse(code = 201, message = "Created"),
+            @ApiResponse(code = 400, message = "Bad Request")})
+    @RequestMapping(value = "v1/queue/{queue-id}/appointments",
+            produces = {"application/json"},
+            method = RequestMethod.POST)
+    public ResponseEntity<List<String>> createAppointments(@PathVariable("queue-id") String queueId,
+                                                           @RequestBody List<Range> ranges) {
+        List<String> appointmentsIds = appointmentService.createAppointments(queueId, ranges);
+
+        return CollectionUtils.isEmpty(appointmentsIds)
+                       ? ResponseEntity.notFound().build()
+                       : ResponseEntity.ok(appointmentsIds);
+    }
+
     @ApiOperation(value = "Get appointment by queue id", nickname = "getAppoinmentsByQueueIdAndStatus", response = String.class)
     @ApiResponses(value = {
             @ApiResponse(code = 200, message = "Created"),
@@ -84,11 +103,6 @@ public class QueueController {
             produces = {"application/json"},
             method = RequestMethod.GET)
     public ResponseEntity<List<ReadAppointmentResponse>> getAppoinmentsByQueueIdAndStatus(@PathVariable("queue-id") String queueId) {
-
-        List<ReadAppointmentResponse> responses = queueService.getAppointmentsByQueueId(queueId);
-
-        return CollectionUtils.isEmpty(responses)
-                       ? ResponseEntity.notFound().build()
-                       : ResponseEntity.ok(responses);
+        return ResponseEntity.ok(queueService.getAppointmentsByQueueId(queueId));
     }
 }
