@@ -97,7 +97,7 @@ public class UserController {
     @RequestMapping(value = "v1/user/login",
             produces = {"application/json"},
             method = RequestMethod.POST)
-    public ResponseEntity<User> logInUser(@RequestBody LogInUserRequest logInUserRequest) {
+    public ResponseEntity<UserResponse> logInUser(@RequestBody LogInUserRequest logInUserRequest) {
         return userService.identifyUser(logInUserRequest)
                        .map(ResponseEntity::ok)
                        .orElseGet(ResponseEntity.notFound()::build);

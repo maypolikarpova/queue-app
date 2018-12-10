@@ -70,9 +70,11 @@ public class UserService {
         return false;
     }
 
-    public Optional<User> identifyUser(LogInUserRequest logInUserRequest) {
-        return userRepository.findByEmail(logInUserRequest.getEmail())
-                       .filter(user -> user.getPassword().equals(logInUserRequest.getPassword()));
+    public Optional<UserResponse> identifyUser(LogInUserRequest logInUserRequest) {
+        Optional<User> user = userRepository.findByEmail(logInUserRequest.getEmail())
+                                      .filter(u -> u.getPassword().equals(logInUserRequest.getPassword()));
+
+        return user.flatMap(userMapper::mapToUserResponse);
     }
 
     public List<QueueResponse> readQueueByProviderId(String providerId) {
