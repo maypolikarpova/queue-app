@@ -10,6 +10,7 @@ import queueapp.repository.AppointmentRepository;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -71,6 +72,7 @@ public class AppointmentService {
 
     public LocalDateTime getNextApprovedAppointmentDate(String queueId) {
         List<Appointment> appointments = appointmentRepository.findByQueueIdAndStatus(queueId, AppointmentStatus.APPROVED);
+        appointments.sort(Comparator.comparing(Appointment::getDateTimeFrom).reversed());
 
         return appointments.stream()
                        .findFirst()
@@ -80,6 +82,7 @@ public class AppointmentService {
 
     public LocalDateTime getNextAvailableAppointmentDate(String queueId) {
         List<Appointment> appointments = appointmentRepository.findByQueueIdAndStatus(queueId, AppointmentStatus.CREATED);
+        appointments.sort(Comparator.comparing(Appointment::getDateTimeFrom).reversed());
 
         return appointments.stream()
                        .findFirst()

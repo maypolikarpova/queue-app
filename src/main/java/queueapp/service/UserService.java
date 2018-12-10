@@ -2,6 +2,7 @@ package queueapp.service;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import queueapp.domain.appointment.Appointment;
 import queueapp.domain.appointment.ReadAppointmentByClientIdResponse;
 import queueapp.domain.queue.QueueResponse;
 import queueapp.domain.user.*;
@@ -12,6 +13,7 @@ import queueapp.service.mapper.AppointmentMapper;
 import queueapp.service.mapper.QueueMapper;
 import queueapp.service.mapper.UserMapper;
 
+import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
 
@@ -78,7 +80,10 @@ public class UserService {
     }
 
     public List<ReadAppointmentByClientIdResponse> readQueuesByClientId(String clientId) {
-        return appointmentMapper.mapToReadAppointmentByClientIdResponseList(appointmentRepository.findByClientId(clientId));
+        List<Appointment> appointments = appointmentRepository.findByClientId(clientId);
+        appointments.sort(Comparator.comparing(Appointment::getDateTimeFrom));
+
+        return appointmentMapper.mapToReadAppointmentByClientIdResponseList(appointments);
     }
 
     private boolean validatePassword(String userPassword, String oldPassword) {
