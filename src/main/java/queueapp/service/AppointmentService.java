@@ -1,6 +1,7 @@
 package queueapp.service;
 
 import lombok.RequiredArgsConstructor;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
 import queueapp.domain.appointment.Appointment;
@@ -40,7 +41,6 @@ public class AppointmentService {
 
     public boolean requestAppointmentFromClient(String appointmentId, String clientId) {
         return Optional.ofNullable(appointmentRepository.findOne(appointmentId))
-                       .filter(a -> a.getClientId().equals(clientId))
                        .map(a -> requestAppointment(a, AppointmentStatus.REQUESTED, clientId))
                        .orElse(false);
     }
@@ -97,10 +97,14 @@ public class AppointmentService {
     }
 
     private boolean requestAppointment(Appointment appointment, AppointmentStatus status, String clientId) {
-        appointment.setClientId(clientId);
-        appointment.setStatus(status);
-        return Optional.ofNullable(appointmentRepository.save(appointment))
-                       .isPresent();
+        if (StringUtils.isBlank(appointment.getClientId())) {
+            appointment.setClientId(clientId);
+            appointment.setStatus(status);
+            return Optional.ofNullable(appointmentRepository.save(appointment))
+                           .isPresent();
+        }
+
+        return false;
     }
 
 }
