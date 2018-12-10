@@ -1,6 +1,7 @@
 package queueapp.service.mapper;
 
 import lombok.RequiredArgsConstructor;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Component;
 import queueapp.domain.appointment.Appointment;
 import queueapp.domain.appointment.ReadAppointmentResponse;
@@ -36,8 +37,12 @@ public class AppointmentMapper {
     }
 
     private UserResponse mapToUserResponse(String clientId) {
-        return Optional.ofNullable(userRepository.findOne(clientId))
-                .flatMap(userMapper::mapToUserResponse)
-                .orElse(null);
+        if (StringUtils.isNotBlank(clientId)) {
+            return Optional.ofNullable(userRepository.findOne(clientId))
+                           .flatMap(userMapper::mapToUserResponse)
+                           .orElse(null);
+        }
+
+        return null;
     }
 }
