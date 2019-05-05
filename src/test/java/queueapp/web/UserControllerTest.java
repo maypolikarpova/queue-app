@@ -8,7 +8,7 @@ import static org.junit.Assert.*;
 public class UserControllerTest {
 
     @Before
-    public void setUp() throws Exception {
+    public void setUp() {
     }
 
     @Test

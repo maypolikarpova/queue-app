@@ -43,7 +43,7 @@ public class AppointmentController {
     @RequestMapping(value = "v1/appointment/{appointment-id}/cancel",
             produces = {"application/json"},
             method = RequestMethod.PATCH)
-    public ResponseEntity<String> cancelAppointment(@PathVariable("appointment-id") String appointmentId) {
+    public ResponseEntity<Void> cancelAppointment(@PathVariable("appointment-id") String appointmentId) {
         return appointmentService.updateAppointmentStatus(appointmentId, AppointmentStatus.CANCELLED)
                        ? ResponseEntity.ok().build()
                        : ResponseEntity.notFound().build();
@@ -57,7 +57,7 @@ public class AppointmentController {
     @RequestMapping(value = "v1/appointment/{appointment-id}/approve",
             produces = {"application/json"},
             method = RequestMethod.PATCH)
-    public ResponseEntity<String> approveAppointment(@PathVariable("appointment-id") String appointmentId) {
+    public ResponseEntity<Void> approveAppointment(@PathVariable("appointment-id") String appointmentId) {
         return appointmentService.updateAppointmentStatus(appointmentId, AppointmentStatus.APPROVED)
                        ? ResponseEntity.ok().build()
                        : ResponseEntity.notFound().build();

@@ -75,8 +75,8 @@ public class QueueController {
             method = RequestMethod.DELETE)
     public ResponseEntity<Void> deleteQueue(@PathVariable("queue-id") String queueId) {
         return queueService.deleteQueue(queueId)
-                       ? ResponseEntity.notFound().build()
-                       : ResponseEntity.noContent().build();
+                       ? ResponseEntity.noContent().build()
+                       : ResponseEntity.notFound().build();
     }
 
     @ApiOperation(value = "Create new appointment for given queue", nickname = "createAppointments")
@@ -95,14 +95,14 @@ public class QueueController {
                        : ResponseEntity.ok(appointmentsIds);
     }
 
-    @ApiOperation(value = "Get appointment by queue id", nickname = "getAppoinmentsByQueueIdAndStatus", response = String.class)
+    @ApiOperation(value = "Get appointment by queue id", nickname = "getAppointmentsByQueueId", response = String.class)
     @ApiResponses(value = {
             @ApiResponse(code = 200, message = "Created"),
             @ApiResponse(code = 404, message = "Bad Request")})
     @RequestMapping(value = "v1/queue/{queue-id}/appointments",
             produces = {"application/json"},
             method = RequestMethod.GET)
-    public ResponseEntity<List<ReadAppointmentResponse>> getAppoinmentsByQueueIdAndStatus(@PathVariable("queue-id") String queueId) {
+    public ResponseEntity<List<ReadAppointmentResponse>> getAppointmentsByQueueId(@PathVariable("queue-id") String queueId) {
         return ResponseEntity.ok(queueService.getAppointmentsByQueueId(queueId));
     }
 }
