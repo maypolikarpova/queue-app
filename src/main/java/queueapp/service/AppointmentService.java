@@ -33,7 +33,7 @@ public class AppointmentService {
             appointment.setQueueId(queueId);
 
             Optional.ofNullable(appointmentRepository.save(appointment))
-                    .map(a -> appointmentsIds.add(a.getClientId()));
+                    .map(a -> appointmentsIds.add(a.getAppointmentId()));
         }
 
         return appointmentsIds;
@@ -51,9 +51,9 @@ public class AppointmentService {
                        .orElse(false);
     }
 
-    public boolean deleteAppointment(String registryId) {
-        if (appointmentRepository.exists(registryId)) {
-            appointmentRepository.delete(registryId);
+    public boolean deleteAppointment(String appointmentId) {
+        if (appointmentRepository.exists(appointmentId)) {
+            appointmentRepository.delete(appointmentId);
             return true;
         }
         return false;

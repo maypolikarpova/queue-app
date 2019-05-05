@@ -26,6 +26,8 @@ import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Matchers.any;
+import static org.mockito.Matchers.anyString;
+import static org.mockito.Mockito.doNothing;
 import static org.mockito.Mockito.when;
 
 @RunWith(MockitoJUnitRunner.class)
@@ -39,6 +41,8 @@ public class QueueServiceTest {
     private static final String PHONE_NUMBER = "phone number";
     private static final String APPOINTMENT_ID = "appointment id";
     private static final String CLIENT_ID = "client id";
+
+    private static final String WRONG_QUEUE_ID = "wrong queue id";
 
     @InjectMocks
     private QueueService queueService;
@@ -70,9 +74,20 @@ public class QueueServiceTest {
                 .thenReturn(expectedQueue);
         when(queueRepository.exists(QUEUE_ID))
                 .thenReturn(true);
+        doNothing().when(queueRepository).delete(anyString());
 
-        when(appointmentMapper.mapToReadAppointmentResponseList(any(List.class)))
+        when(queueRepository.findOne(WRONG_QUEUE_ID))
+                .thenReturn(null);
+        when(queueRepository.exists(WRONG_QUEUE_ID))
+                .thenReturn(false);
+
+        when(appointmentMapper.mapToReadAppointmentResponseList(appointments))
                 .thenReturn(readAppointmentResponses);
+        when(appointmentMapper.mapToReadAppointmentResponseList(Collections.emptyList()))
+                .thenReturn(Collections.emptyList());
+
+        when(appointmentRepository.findByQueueId(WRONG_QUEUE_ID))
+                .thenReturn(Collections.emptyList());
         when(appointmentRepository.findByQueueId(QUEUE_ID))
                 .thenReturn(appointments);
 
@@ -102,6 +117,15 @@ public class QueueServiceTest {
     }
 
     @Test
+    public void readQueueByQueueId_Fail_WrongQueueId() {
+        //When
+        Optional<QueueResponse> response = queueService.readQueueByQueueId(WRONG_QUEUE_ID);
+
+        //Then
+        assertThat(response).isEqualTo(Optional.empty());
+    }
+
+    @Test
     public void updateQueue_Success() {
         //Given
         QueueResponse expectedQueueResponse = buildQueueResponse();
@@ -115,6 +139,15 @@ public class QueueServiceTest {
     }
 
     @Test
+    public void updateQueue_Fail_WrongQueueId() {
+        //When
+        Optional<QueueResponse> response = queueService.updateQueue(WRONG_QUEUE_ID, buildUpdateQueueRequest());
+
+        //Then
+        assertThat(response).isEqualTo(Optional.empty());
+    }
+
+    @Test
     public void getAppointmentsByQueueId_Success() {
         //Given
         List<ReadAppointmentResponse> expectedReadAppointmentResponses = buildAppointmentResponses();
@@ -125,6 +158,33 @@ public class QueueServiceTest {
         //Then
         assertThat(response).isNotEqualTo(Collections.emptyList());
         assertThat(response).isEqualTo(expectedReadAppointmentResponses);
+    }
+
+    @Test
+    public void getAppointmentsByQueueId_Fail_WrongQueueId() {
+        //When
+        List<ReadAppointmentResponse> response = queueService.getAppointmentsByQueueId(WRONG_QUEUE_ID);
+
+        //Then
+        assertThat(response).isEqualTo(Collections.emptyList());
+    }
+
+    @Test
+    public void deleteQueue_Success() {
+        //When
+        boolean response = queueService.deleteQueue(QUEUE_ID);
+
+        //Then
+        assertThat(response).isTrue();
+    }
+
+    @Test
+    public void deleteQueue_Fail_WrongQueueId() {
+        //When
+        boolean response = queueService.deleteQueue(WRONG_QUEUE_ID);
+
+        //Then
+        assertThat(response).isFalse();
     }
 
     private CreateQueueRequest buildCreateQueueRequest() {
